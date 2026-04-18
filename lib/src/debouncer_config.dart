@@ -21,9 +21,9 @@ class DebouncerConfig {
     this.leading = false,
     this.trailing = true,
   }) : assert(
-  leading || trailing,
-  'At least one of leading or trailing must be true.',
-  );
+         leading || trailing,
+         'At least one of leading or trailing must be true.',
+       );
 
   DebouncerConfig copyWith({
     Duration? delay,

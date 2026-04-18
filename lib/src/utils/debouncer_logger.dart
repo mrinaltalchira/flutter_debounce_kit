@@ -52,7 +52,9 @@ class DebouncerLogger {
 
   void logReset(String? label, Duration delay) {
     if (!enabled || level != DebouncerLogLevel.debug) return;
-    _log('↺ reset${label != null ? ' ($label)' : ''} — next fire in ${delay.inMilliseconds}ms');
+    _log(
+      '↺ reset${label != null ? ' ($label)' : ''} — next fire in ${delay.inMilliseconds}ms',
+    );
   }
 
   void _log(String message) => print('$prefix $message');

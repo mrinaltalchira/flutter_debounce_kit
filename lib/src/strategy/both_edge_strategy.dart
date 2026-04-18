@@ -20,20 +20,22 @@ class BothEdgeStrategy extends DebouncerStrategy {
 
   @override
   void execute(
-      VoidCallback action,
-      DebouncerConfig config,
-      Timer? currentTimer,
-      void Function(Timer?) updateTimer,
-      ) {
+    VoidCallback action,
+    DebouncerConfig config,
+    Timer? currentTimer,
+    void Function(Timer?) updateTimer,
+  ) {
     final isIdle = currentTimer == null || !currentTimer.isActive;
 
     currentTimer?.cancel();
 
     // Always schedule a trailing fire.
-    updateTimer(Timer(config.delay, () {
-      action();
-      updateTimer(null);
-    }));
+    updateTimer(
+      Timer(config.delay, () {
+        action();
+        updateTimer(null);
+      }),
+    );
 
     // Leading fire on first call only.
     if (isIdle) {

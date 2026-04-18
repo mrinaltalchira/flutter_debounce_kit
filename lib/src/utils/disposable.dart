@@ -25,7 +25,7 @@ mixin Disposable {
     if (_disposed) {
       throw StateError(
         'Cannot call $methodName on a disposed Debouncer. '
-            'Create a new Debouncer instance instead.',
+        'Create a new Debouncer instance instead.',
       );
     }
   }

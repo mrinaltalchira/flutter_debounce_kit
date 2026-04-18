@@ -61,7 +61,7 @@ class Debouncer with Disposable {
   /// Creates a [Debouncer] with the given [delay] and optional overrides.
   ///
   /// - [delay]    — how long to wait after the last call. Default: 300 ms.
-  /// - [strategy] — firing behaviour. Default: [TrailingEdgeStrategy].
+  /// - [DebouncerStrategy] — firing behaviour. Default: [TrailingEdgeStrategy].
   /// - [logger]   — attach a [DebouncerLogger] to trace events.
   /// - [hooks]    — lifecycle callbacks (onFire, onCancel, onDispose).
   /// - [label]    — a debug label shown in log output.
@@ -71,23 +71,21 @@ class Debouncer with Disposable {
     this.logger,
     this.hooks,
     String? label,
-  })  : config = DebouncerConfig(delay: delay, debugLabel: label),
-        strategy = strategy ?? const TrailingEdgeStrategy();
-
-
+  }) : config = DebouncerConfig(delay: delay, debugLabel: label),
+       strategy = strategy ?? const TrailingEdgeStrategy();
 
   /// Creates a [Debouncer] directly from a [DebouncerConfig].
   Debouncer.fromConfig(
-      this.config, {
-        DebouncerStrategy? strategy,
-        this.logger,
-        this.hooks,
-      }) : strategy = strategy ?? const TrailingEdgeStrategy();
+    this.config, {
+    DebouncerStrategy? strategy,
+    this.logger,
+    this.hooks,
+  }) : strategy = strategy ?? const TrailingEdgeStrategy();
 
   /// Whether a call is currently pending (timer is running).
   bool get isPending => _timer != null && _timer!.isActive;
 
-  /// Schedules [action] to run according to the active [strategy].
+  /// Schedules [action] to run according to the active [DebouncerStrategy].
   ///
   /// Each call resets the internal timer (for trailing-edge strategies).
   /// Throws a [StateError] if called after [dispose].
@@ -97,14 +95,14 @@ class Debouncer with Disposable {
     final bool hadPendingTimer = isPending;
 
     strategy.execute(
-          () {
+      () {
         logger?.logFire(config.debugLabel);
         hooks?.onFire?.call();
         action();
       },
       config,
       _timer,
-          (t) {
+      (t) {
         _timer = t;
         if (t != null) {
           logger?.logReset(config.debugLabel, config.delay);

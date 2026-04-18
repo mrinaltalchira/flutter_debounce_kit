@@ -1,7 +1,5 @@
 name: flutter_debounce_kit
-description: A flexible, strategy-based debouncer for Flutter and Dart.
-  Supports trailing-edge, leading-edge, and both-edge strategies,
-  a StatefulWidget mixin, function extensions, and lifecycle hooks.
+description: A flexible and lightweight debouncer for Flutter and Dart apps with multiple strategies and mixin support.
 version: 0.1.0
 homepage: https://github.com/mrinaltalchira/flutter_debounce_kit
 

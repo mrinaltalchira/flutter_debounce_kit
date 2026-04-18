@@ -123,7 +123,7 @@
 <span id="L61"><span class="lineNum">      61</span>              :   /// Creates a [Debouncer] with the given [delay] and optional overrides.</span>
 <span id="L62"><span class="lineNum">      62</span>              :   ///</span>
 <span id="L63"><span class="lineNum">      63</span>              :   /// - [delay]    — how long to wait after the last call. Default: 300 ms.</span>
-<span id="L64"><span class="lineNum">      64</span>              :   /// - [strategy] — firing behaviour. Default: [TrailingEdgeStrategy].</span>
+<span id="L64"><span class="lineNum">      64</span>              :   /// - [DebouncerStrategy] — firing behaviour. Default: [TrailingEdgeStrategy].</span>
 <span id="L65"><span class="lineNum">      65</span>              :   /// - [logger]   — attach a [DebouncerLogger] to trace events.</span>
 <span id="L66"><span class="lineNum">      66</span>              :   /// - [hooks]    — lifecycle callbacks (onFire, onCancel, onDispose).</span>
 <span id="L67"><span class="lineNum">      67</span>              :   /// - [label]    — a debug label shown in log output.</span>
@@ -149,7 +149,7 @@
 <span id="L87"><span class="lineNum">      87</span>              :   /// Whether a call is currently pending (timer is running).</span>
 <span id="L88"><span class="lineNum">      88</span> <span class="tlaGNC">           8 :   bool get isPending =&gt; _timer != null &amp;&amp; _timer!.isActive;</span></span>
 <span id="L89"><span class="lineNum">      89</span>              : </span>
-<span id="L90"><span class="lineNum">      90</span>              :   /// Schedules [action] to run according to the active [strategy].</span>
+<span id="L90"><span class="lineNum">      90</span>              :   /// Schedules [action] to run according to the active [DebouncerStrategy].</span>
 <span id="L91"><span class="lineNum">      91</span>              :   ///</span>
 <span id="L92"><span class="lineNum">      92</span>              :   /// Each call resets the internal timer (for trailing-edge strategies).</span>
 <span id="L93"><span class="lineNum">      93</span>              :   /// Throws a [StateError] if called after [dispose].</span>

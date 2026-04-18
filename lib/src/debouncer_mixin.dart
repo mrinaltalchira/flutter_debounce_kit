@@ -46,15 +46,16 @@ mixin DebouncerMixin<T extends StatefulWidget> on State<T> {
   /// Optional [LifecycleHooks]. Override to receive fire/cancel callbacks.
   LifecycleHooks? get debouncerHooks => null;
 
-  Debouncer get _debouncerInstance => _mixinDebouncer ??= Debouncer.fromConfig(
-    DebouncerConfig(
-      delay: debounceDuration,
-      debugLabel: runtimeType.toString(),
-    ),
-    strategy: debouncerStrategy,
-    logger: debouncerLogger,
-    hooks: debouncerHooks,
-  );
+  Debouncer get _debouncerInstance =>
+      _mixinDebouncer ??= Debouncer.fromConfig(
+        DebouncerConfig(
+          delay: debounceDuration,
+          debugLabel: runtimeType.toString(),
+        ),
+        strategy: debouncerStrategy,
+        logger: debouncerLogger,
+        hooks: debouncerHooks,
+      );
 
   /// Schedules [action] through the widget-scoped debouncer.
   void debounce(VoidCallback action) => _debouncerInstance.run(action);
@@ -67,7 +68,7 @@ mixin DebouncerMixin<T extends StatefulWidget> on State<T> {
 
   @override
   void dispose() {
-    _mixinDebouncer?.dispose(); 
+    _mixinDebouncer?.dispose();
     _mixinDebouncer = null;
     super.dispose();
   }

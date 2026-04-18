@@ -20,11 +20,11 @@ class TrailingEdgeStrategy extends DebouncerStrategy {
 
   @override
   void execute(
-      VoidCallback action,
-      DebouncerConfig config,
-      Timer? currentTimer,
-      void Function(Timer?) updateTimer,
-      ) {
+    VoidCallback action,
+    DebouncerConfig config,
+    Timer? currentTimer,
+    void Function(Timer?) updateTimer,
+  ) {
     currentTimer?.cancel();
     updateTimer(Timer(config.delay, action));
   }

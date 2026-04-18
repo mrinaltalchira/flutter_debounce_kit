@@ -24,9 +24,5 @@ class LifecycleHooks {
   /// Called when [Debouncer.dispose] is invoked.
   final VoidCallback? onDispose;
 
-  const LifecycleHooks({
-    this.onFire,
-    this.onCancel,
-    this.onDispose,
-  });
+  const LifecycleHooks({this.onFire, this.onCancel, this.onDispose});
 }

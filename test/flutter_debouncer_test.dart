@@ -1,13 +1,11 @@
 // test/debouncer_mixin_test.dart
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_debounce_kit/flutter_debouncer_kit.dart';
+import 'package:flutter_debounce_kit/flutter_debounce_kit.dart';
 
 void main() {
-
   // ── Trailing edge ──────────────────────────────
   group('TrailingEdgeStrategy', () {
-
     test('does NOT fire before delay elapses', () {
       fakeAsync((async) {
         int count = 0;
@@ -15,7 +13,7 @@ void main() {
 
         d.run(() => count++);
         async.elapse(const Duration(milliseconds: 299)); // just under
-        expect(count, 0);                                // still silent
+        expect(count, 0); // still silent
         d.dispose();
       });
     });
@@ -43,7 +41,7 @@ void main() {
           async.elapse(const Duration(milliseconds: 50));
         }
         async.elapse(const Duration(milliseconds: 300));
-        expect(count, 1);   // NOT 5
+        expect(count, 1); // NOT 5
         d.dispose();
       });
     });
@@ -59,7 +57,7 @@ void main() {
 
         d.run(() => count++);
         async.elapse(const Duration(milliseconds: 300));
-        expect(count, 2);   // second independent call
+        expect(count, 2); // second independent call
         d.dispose();
       });
     });
@@ -67,7 +65,6 @@ void main() {
 
   // ── Leading edge ───────────────────────────────
   group('LeadingEdgeStrategy', () {
-
     test('fires IMMEDIATELY on first call', () {
       fakeAsync((async) {
         int count = 0;
@@ -77,7 +74,7 @@ void main() {
         );
 
         d.run(() => count++);
-        expect(count, 1);   // instant — no elapse needed
+        expect(count, 1); // instant — no elapse needed
         d.dispose();
       });
     });
@@ -106,9 +103,9 @@ void main() {
           strategy: const LeadingEdgeStrategy(),
         );
 
-        d.run(() => count++);             // fires: 1
+        d.run(() => count++); // fires: 1
         async.elapse(const Duration(milliseconds: 301)); // cooldown over
-        d.run(() => count++);             // fires: 2
+        d.run(() => count++); // fires: 2
         expect(count, 2);
         d.dispose();
       });
@@ -117,7 +114,6 @@ void main() {
 
   // ── Both edge ──────────────────────────────────
   group('BothEdgeStrategy', () {
-
     test('single call fires TWICE — lead + trail', () {
       fakeAsync((async) {
         int count = 0;
@@ -127,10 +123,10 @@ void main() {
         );
 
         d.run(() => count++);
-        expect(count, 1);                                // leading fire
+        expect(count, 1); // leading fire
 
         async.elapse(const Duration(milliseconds: 300));
-        expect(count, 2);                                // trailing fire
+        expect(count, 2); // trailing fire
         d.dispose();
       });
     });
@@ -138,7 +134,6 @@ void main() {
 
   // ── cancel() ──────────────────────────────────
   group('cancel()', () {
-
     test('prevents pending action from firing', () {
       fakeAsync((async) {
         int count = 0;
@@ -150,7 +145,7 @@ void main() {
         expect(d.isPending, false);
 
         async.elapse(const Duration(milliseconds: 300));
-        expect(count, 0);   // nothing fired
+        expect(count, 0); // nothing fired
         d.dispose();
       });
     });
@@ -158,7 +153,6 @@ void main() {
 
   // ── dispose() ─────────────────────────────────
   group('dispose()', () {
-
     test('throws StateError if run() called after dispose', () {
       final d = Debouncer(delay: const Duration(milliseconds: 300));
       d.dispose();
@@ -172,14 +166,13 @@ void main() {
         d.run(() => count++);
         d.dispose();
         async.elapse(const Duration(milliseconds: 300));
-        expect(count, 0);   // timer was killed
+        expect(count, 0); // timer was killed
       });
     });
   });
 
   // ── LifecycleHooks ────────────────────────────
   group('LifecycleHooks', () {
-
     test('onFire is called when action fires', () {
       fakeAsync((async) {
         bool fired = false;
@@ -221,7 +214,6 @@ void main() {
 
   // ── DebouncerConfig ───────────────────────────
   group('DebouncerConfig', () {
-
     test('copyWith overrides only specified fields', () {
       const original = DebouncerConfig(delay: Duration(milliseconds: 300));
       final updated = original.copyWith(delay: Duration(milliseconds: 500));
@@ -231,7 +223,7 @@ void main() {
 
     test('throws AssertionError when both edges are false', () {
       expect(
-            () => DebouncerConfig(leading: false, trailing: false),
+        () => DebouncerConfig(leading: false, trailing: false),
         throwsAssertionError,
       );
     });
@@ -239,7 +231,6 @@ void main() {
 
   // ── Function extensions ───────────────────────
   group('Extensions', () {
-
     test('.debounced() delays a zero-arg function', () {
       fakeAsync((async) {
         int count = 0;
@@ -291,9 +282,7 @@ void main() {
       fakeAsync((async) {
         final d = Debouncer(
           delay: const Duration(milliseconds: 300),
-          logger: const DebouncerLogger(
-            level: DebouncerLogLevel.verbose,
-          ),
+          logger: const DebouncerLogger(level: DebouncerLogLevel.verbose),
         );
         d.run(() {}); // first call
         d.run(() {}); // second call cancels the first → triggers logCancel
@@ -348,12 +337,14 @@ void main() {
       final d = Debouncer(delay: const Duration(milliseconds: 300));
       d.dispose();
       expect(
-            () => d.run(() {}),
-        throwsA(isA<StateError>().having(
-              (e) => e.message,
-          'message',
-          contains('run'),
-        )),
+        () => d.run(() {}),
+        throwsA(
+          isA<StateError>().having(
+            (e) => e.message,
+            'message',
+            contains('run'),
+          ),
+        ),
       );
     });
   });
@@ -383,4 +374,3 @@ void main() {
     });
   });
 }
-

@@ -1,7 +1,7 @@
 // test/debouncer_mixin_test.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_debounce_kit/flutter_debouncer_kit.dart';
+import 'package:flutter_debounce_kit/flutter_debounce_kit.dart';
 
 // A minimal widget that uses DebouncerMixin
 class _TestWidget extends StatefulWidget {
@@ -29,7 +29,9 @@ class _TestWidgetState extends State<_TestWidget> with DebouncerMixin {
 }
 
 void main() {
-  testWidgets('DebouncerMixin fires once after user stops typing', (tester) async {
+  testWidgets('DebouncerMixin fires once after user stops typing', (
+    tester,
+  ) async {
     final List<String> results = [];
 
     await tester.pumpWidget(_TestWidget(onDebounced: results.add));
@@ -48,11 +50,13 @@ void main() {
     // Wait for debounce to fire
     await tester.pump(const Duration(milliseconds: 300));
 
-    expect(results.length, 1);           // only ONE call
-    expect(results.first, 'hello');      // with the LAST value
+    expect(results.length, 1); // only ONE call
+    expect(results.first, 'hello'); // with the LAST value
   });
 
-  testWidgets('Mixin disposes debouncer when widget is removed', (tester) async {
+  testWidgets('Mixin disposes debouncer when widget is removed', (
+    tester,
+  ) async {
     final List<String> results = [];
 
     await tester.pumpWidget(_TestWidget(onDebounced: results.add));
